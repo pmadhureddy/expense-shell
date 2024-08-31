@@ -37,30 +37,30 @@ then
 fi  
 
 
-dnf install nginx -y 
+dnf install nginx -y &>>$LOG_FILE
 VALIDATE $? "Installing Nginx..."
 
 
-systemctl enable nginx
+systemctl enable nginx &>>$LOG_FILE
 VALIDATE $? "Enabled Nginx..."
 
 
-systemctl start nginx
+systemctl start nginx &>>$LOG_FILE
 VALIDATE $? "Started Nginx..."
 
 
 
 rm -rf /usr/share/nginx/html/*
 
-curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOG_FILE
 VALIDATE $? "Downloading frontend code..."
 
 
 cd /usr/share/nginx/html
 
 
-unzip /tmp/frontend.zip
+unzip /tmp/frontend.zip &>>$LOG_FILE
 VALIDATE $? "Extracting the frontend code..."
 
-systemctl restart nginx
+systemctl restart nginx &>>$LOG_FILE
 VALIDATE $? "Restarting nginx..."
