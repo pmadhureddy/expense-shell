@@ -46,7 +46,7 @@ systemctl start mysqld &>>$LOG_FILE
 VALIDATE $? "Started MySQL server"   
 
 
-mysql -h mysql.daws81.fun -u root -pExepense@App1 -e "sow databases;" &>>$LOG_FILE
+mysql -h mysql.daws81.fun -u root -pExpense@App1 -e "show databases;" &>>$LOG_FILE
 
 if [ $? -ne 0 ]
 then
