@@ -46,15 +46,15 @@ systemctl start mysqld &>>$LOG_FILE
 VALIDATE $? "Started MySQL server"   
 
 
-mysql -h mysql.daws81.fun -u root -pExpense@App1 -e "show databases;" &>>$LOG_FILE
+mysql -h mysql.daws81.fun -u root -pExpense@App1 -e 'show databases;' &>>$LOG_FILE
 
 if [ $? -ne 0 ]
 then
-   echo "Password not setu. Setting up now"
+   echo "Password not setp. Setting up now"
    mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
    VALIDATE $? "Setting up root password" 
 else 
-   echo  -e "MYSQL root Password is already setup...$Y Skipping" | tee -s $LOG_FILE
+   echo  -e "MYSQL root Password is already setup...$Y Skipping" | tee -a $LOG_FILE
 fi          
 
 
