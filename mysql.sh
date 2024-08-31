@@ -43,9 +43,18 @@ systemctl enable mysqld &>>$LOG_FILE
 VALIDATE $? "Enabled MySQL server"     
 
 systemctl start mysqld &>>$LOG_FILE
-VALIDATE $? "Started MySQL server"     
+VALIDATE $? "Started MySQL server"   
 
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
-VALIDATE $? "Setting up root password"     
+
+mysql -h mysql.daws81.fun -u root -pExepense@App1 -e "sow databases;" &>>$LOG_FILE
+
+if [ $? -ne 0 ]
+then
+   echo "Password not setu. Setting up now"
+   mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
+   VALIDATE $? "Setting up root password" 
+else 
+   echo "MYSQL root Password is already setup...$Y Skipping" | tee -s $LOG_FILE
+fi          
 
 
