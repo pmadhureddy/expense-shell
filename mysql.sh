@@ -5,7 +5,7 @@ LOGS_FOLDER="/var/logs/expense"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME-$TIMESTAMP.log"
-MYSQL_PASS="Expense@App1"
+MYSQL_PASS=$1
 
 mkdir -p $LOGS_FOLDER
 
@@ -47,7 +47,7 @@ systemctl start mysqld &>>$LOG_FILE
 VALIDATE $? "Started MySQL server"   
 
 
-mysql -h mysql.daws81.fun -u root -p$MYSQL_PASS -e 'show databases;' &>>$LOG_FILE
+mysql -h mysql.daws81.fun -u root -p $MYSQL_PASS -e 'show databases;' &>>$LOG_FILE
 
 if [ $? -ne 0 ]
 then
