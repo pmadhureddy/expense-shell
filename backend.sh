@@ -36,14 +36,22 @@ then
    exit 1
 fi  
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>>$LOG_FILE
 VALIDATE $? "Disable default node js"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$LOG_FILE
 VALIDATE $? "Enable nodej:20"
 
-dnf install nodejs -y
+dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Install node js" 
 
-useradd expense
-VALIDATE $? "Creating Expense User" 
+id expense &>>$LOG_FILE
+
+if [ $? -ne 0 ]
+then
+   echo -e "Expense user is not exist. $G So, Creating... $N"
+   useradd expense &>>$LOG_FILE 
+   VALIDATE $? "Creating Expense User" 
+else 
+   echo -e "Expense User already exist... $Y Skipping... $N
+fi   
